@@ -25,6 +25,12 @@ namespace ConsoleApplication.Model
             _questionAndAnswers = new List<QuestionAndAnswer>();
         }
 
+        public void AddQuestionAndAnswer(string question, string answer)
+        {
+            var questionAndAnswer = new QuestionAndAnswer(Clean(question)){ Answer = Clean(answer) };
+            AddQuestionAndAnswer(questionAndAnswer);
+        }
+
         public void AddQuestionAndAnswer(QuestionAndAnswer questionAndAnswer)
         {
             if(_questionAndAnswers.Any(q => q.Question == questionAndAnswer.Question))
@@ -51,6 +57,11 @@ namespace ConsoleApplication.Model
 
             if(!_questionAndAnswers.Any(q => q.Question == question))
                 throw new InvalidOperationException($"Unknown question '{question}'");
+        }
+
+                private string Clean(string value)
+        {
+            return value.Replace("\r", "").Replace("\n", "").Trim();
         }
     }
 }
